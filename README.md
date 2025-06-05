@@ -137,3 +137,81 @@ Prompt de comando (`> `).
 *   Maior variedade de seções e mundos-livro.
 
 Este documento serve como um guia inicial. Muitos detalhes serão descobertos e refinados durante o processo de desenvolvimento e escrita. O foco deve ser em criar uma atmosfera rica e puzzles inteligentes que recompensem a atenção e a curiosidade do jogador.
+
+## Como Rodar o Jogo
+
+### Pré-requisitos
+
+1.  **Implementação Common Lisp:**
+    Este projeto é desenvolvido e testado primariamente com **SBCL (Steel Bank Common Lisp)**, mas deve ser compatível com outras implementações Common Lisp que suportem ASDF e Quicklisp.
+    *   **Linux:** Use o gerenciador de pacotes da sua distribuição.
+        ```bash
+        sudo apt-get install sbcl  # Debian/Ubuntu
+        sudo yum install sbcl      # Fedora
+        # etc.
+        ```
+    *   **macOS:** Via Homebrew:
+        ```bash
+        brew install sbcl
+        ```
+    *   **Windows:** Baixe o instalador do [site oficial do SBCL](http://www.sbcl.org/platform-table.html).
+
+2.  **Quicklisp:**
+    Quicklisp é um gerenciador de bibliotecas para Common Lisp. Se você ainda não o tem, instale-o seguindo as instruções em [https://www.quicklisp.org/beta/](https://www.quicklisp.org/beta/). O processo básico envolve:
+    *   Baixar `quicklisp.lisp`.
+    *   Carregá-lo em sua implementação Lisp: `(load "quicklisp.lisp")`.
+    *   Rodar: `(quicklisp-quickstart:install)`.
+    *   Adicionar ao seu arquivo de inicialização Lisp: `(ql:add-to-init-file)`.
+
+3.  **Configuração do ASDF (para o Lisp encontrar o projeto):**
+    Para que o ASDF (o sistema de build do Common Lisp, geralmente incluído com sua implementação ou via Quicklisp) encontre este projeto localmente, você precisa informar a ele onde procurar por sistemas `.asd`.
+    *   Crie (ou modifique) o arquivo de configuração do ASDF. O local pode variar, mas um comum é:
+        *   Linux/macOS: `~/.config/common-lisp/source-registry.conf.d/50-user.conf`
+        *   Windows: `%APPDATA%/common-lisp/source-registry.conf.d/50-user.conf`
+    *   Adicione o seguinte conteúdo ao arquivo, **substituindo `/caminho/para/seus/projetos/` pelo caminho real** onde você clonou ou colocará o repositório `biblio-almas`:
+        ```lisp
+        (:tree "/caminho/para/seus/projetos/")
+        ```
+    *   Isso diz ao ASDF para procurar recursivamente por arquivos `.asd` dentro do diretório especificado. Se o projeto `biblio-almas` estiver em `/caminho/para/seus/projetos/biblio-almas/`, ele será encontrado.
+
+### Rodando o Jogo Manualmente (via REPL)
+
+1.  **Clone o Repositório (se ainda não o fez):**
+    ```bash
+    git clone https://[URL_DO_REPOSITORIO_GIT_DO_PROJETO]/biblio-almas.git
+    ```
+    Substitua `https://[URL_DO_REPOSITORIO_GIT_DO_PROJETO]/biblio-almas.git` pela URL real do repositório.
+
+2.  **Navegue até o Diretório do Projeto:**
+    ```bash
+    cd /caminho/para/seus/projetos/biblio-almas
+    ```
+
+3.  **Inicie sua Implementação Common Lisp (SBCL):**
+    ```bash
+    sbcl
+    ```
+
+4.  **Carregue o Projeto e Suas Dependências:**
+    No REPL do Lisp, execute:
+    ```lisp
+    (ql:quickload :biblio-almas)
+    ```
+    Isso usará o Quicklisp para carregar o sistema `biblio-almas` (definido em `biblio-almas.asd`) e quaisquer dependências listadas lá (como `:cl-store`).
+
+5.  **Inicie o Jogo:**
+    Ainda no REPL, execute:
+    ```lisp
+    (biblio-almas-game:start-game)
+    ```
+    Isso chamará a função principal `start-game` definida no pacote `biblio-almas-game` e iniciará o loop do jogo.
+
+### Usando o Script de Inicialização (Recomendado)
+
+Para facilitar o início do jogo, você pode usar o script `run.lisp` fornecido na raiz do projeto.
+Após seguir os [Pré-requisitos](#pré-requisitos) (especialmente a configuração do SBCL, Quicklisp e ASDF), e clonar o repositório, basta executar o seguinte comando no seu terminal a partir do diretório raiz do projeto `biblio-almas`:
+
+```bash
+sbcl --script run.lisp
+```
+Isso irá carregar todas as dependências e iniciar o jogo diretamente.
