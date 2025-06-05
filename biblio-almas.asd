@@ -3,7 +3,7 @@
   :version "0.0.1"
   :author "Jules <ai.dev.google@example.com>" ; Placeholder author
   :license "MIT"
-  :depends-on ()
+  :depends-on (:cl-store)
   :serial t
   :components ((:file "src/package")
                (:file "src/config" :depends-on ("src/package"))
