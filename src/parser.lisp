@@ -67,6 +67,10 @@
             ((member verbo '(:inventario :inv :i :pertences))
              (list :inventario))
 
+            ;; Ajuda
+            ((member verbo '(:ajuda :help))
+             (list :ajuda))
+
             ;; Falar com NPC
             ((member verbo '(:falar :conversar :perguntar :talk :ask))
              (if argumentos-str
