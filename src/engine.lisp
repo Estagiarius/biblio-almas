@@ -143,6 +143,19 @@
                (format t "~A murmura algo incompreensível.~%" (npc-nome npc-modelo))) ; Placeholder
            t))))))
 
+(defun mostrar-ajuda ()
+  "Mostra uma mensagem de ajuda com os comandos disponíveis."
+  (format t "~&Comandos disponíveis:~%")
+  (format t "  ~a~30t~a~%" "IR [DIREÇÃO] ou [DIREÇÃO]" "Para se mover. Ex: IR NORTE, SUL")
+  (format t "  ~a~30t~a~%" "EXAMINAR [ALGO/LOCAL] ou EXAMINAR" "Para observar. Ex: EXAMINAR LIVRO VERMELHO, EXAMINAR SALA")
+  (format t "  ~a~30t~a~%" "PEGAR [OBJETO]" "Para coletar itens. Ex: PEGAR CHAVE")
+  (format t "  ~a~30t~a~%" "LARGAR [OBJETO]" "Para deixar itens. Ex: LARGAR LIVRO")
+  (format t "  ~a~30t~a~%" "INVENTARIO ou I" "Para ver seus itens.")
+  (format t "  ~a~30t~a~%" "FALAR [PERSONAGEM]" "Para conversar com personagens. Ex: FALAR ARQUIVISTA")
+  (format t "  ~a~30t~a~%" "AJUDA" "Para mostrar esta mensagem.")
+  (format t "  ~a~30t~a~%" "SAIR" "Para terminar o jogo.")
+  t)
+
 (defun process-command (parsed-command-list)
   (if parsed-command-list
       (let ((verbo (first parsed-command-list))
@@ -161,6 +174,8 @@
            (mostrar-inventario))
           ((eql verbo :falar)
            (tentar-falar argumento))
+          ((eql verbo :ajuda)
+           (mostrar-ajuda))
           ((eql verbo :desconhecido)
            (format t "Não entendi o que você quis dizer com '~{~a~^ ~}'.~%" params) nil)
           (t
